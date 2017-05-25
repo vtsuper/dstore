@@ -274,7 +274,11 @@ define([
 			}
 
 			if (queryParams.length > 0) {
-				requestUrl += (this._targetContainsQueryString ? '&' : '?') + queryParams.join('&');
+				var url = requestUrl.substring(0,requestUrl.indexOf("?"));
+				var query = requestUrl.substring(requestUrl.indexOf("?") + 1, requestUrl.length);
+				query = ioQuery.queryToObject(query);
+				query2 = ioQuery.queryToObject(queryParams.join('&'));
+				requestUrl = url + '?' +ioQuery.objectToQuery(lang.mixin(query,query2));
 			}
 			return requestUrl;
 		},
